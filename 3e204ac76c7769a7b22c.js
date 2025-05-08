@@ -141,7 +141,7 @@ async function bindMeetingEvents(meeting) {
     console.log("meeting stopped");
     meeting.stopRecording();
     webex.meetings.unregister();
-    window.location.href = "https://wxsd-sales.github.io/video-meeting-webpage/hangup";
+    window.location.href = "hangup";
     const element = media.type === "local" ? selfView : media.type === "remoteVideo" ? remoteViewVideo : media.type === "remoteAudio" ? remoteViewAudio : null;
     if (element) {
       element.srcObject = null;
