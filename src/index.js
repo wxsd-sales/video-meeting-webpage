@@ -172,7 +172,7 @@ async function bindMeetingEvents(meeting) {
     console.log("meeting stopped");
     meeting.stopRecording();
     webex.meetings.unregister();
-    window.location.href = "/hangup";
+    window.location.href = "hangup";
     const element =
       media.type === "local"
         ? selfView

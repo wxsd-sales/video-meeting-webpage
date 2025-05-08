@@ -13,7 +13,7 @@ module.exports = {
     filename: "bundle.js",
     path: path.resolve(__dirname, "dist"),
     clean: true,
-    publicPath: "/",
+    publicPath: "https://wxsd-sales.github.io/video-meeting-webpage/",
   },
   devServer: {
     static: "./dist",
