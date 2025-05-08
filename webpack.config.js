@@ -4,6 +4,7 @@ require("dotenv").config();
 const NodePolyfillPlugin = require("node-polyfill-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 
 module.exports = {
   entry: {
@@ -42,6 +43,11 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: "./src/index.html",
+    }),
+    new CopyWebpackPlugin({
+      patterns: [
+        { from: "public/hangup.html", to: "hangup.html" }, // ✅ copy this file
+      ],
     }),
     // new webpack.DefinePlugin({
     //   "process.env": JSON.stringify({

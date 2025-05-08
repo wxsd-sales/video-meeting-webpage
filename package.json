@@ -45,6 +45,7 @@
   "devDependencies": {
     "@webpack-cli/generators": "^3.0.7",
     "browserify-zlib": "^0.2.0",
+    "copy-webpack-plugin": "^13.0.0",
     "crypto-browserify": "^3.12.1",
     "css-loader": "^7.1.2",
     "file-loader": "^6.2.0",
