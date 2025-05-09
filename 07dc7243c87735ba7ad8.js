@@ -23,10 +23,10 @@ const wc_body = {
   customerName: name,
   customerEmail: "johndoe@gmail.com",
   videoCallDestination: destination,
-  "inappmessaging.appId": "VI24093513",
+  "inappmessaging.appId": "ME07143949",
   "inappmessaging.userId": "6806ea7s-a04e-4fdb-9d86-0b33626f3577"
 };
-await axios.post("https://hooks.us.webexconnect.io/events/3ZYSI927Q3", wc_body).then(resp => {
+await axios.post("https://hooks.us.webexconnect.io/events/F8JF7AK1LS", wc_body).then(resp => {
   console.log("WC Success");
 });
 if (!myAccessToken) {
