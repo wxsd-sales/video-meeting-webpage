@@ -9,6 +9,7 @@ const {
 var socket = io();
 const axios = require("axios");
 console.log("socketio", socket);
+let shareStream = null;
 const urlParams = new URLSearchParams(window.location.search);
 const name = urlParams.get("name") !== null ? urlParams.get("name") : "John Doe";
 const email = urlParams.get("email") !== null ? urlParams.get("email") : "johndoe@gmail.com";
@@ -71,6 +72,8 @@ async function bindButtonEvents(meeting) {
   const self = document.getElementById("self");
   const remoteView = document.getElementById("remote-view");
   const dropdown = document.getElementsByClassName("dropdown");
+  const startShare = document.getElementById("start-screen-share");
+  const stopShare = document.getElementById("stop-screen-share");
   const meetingDest = meeting.destination;
   document.getElementById("hangup").addEventListener("click", async () => {
     // window.location.href = "/hangup";
@@ -79,6 +82,21 @@ async function bindButtonEvents(meeting) {
     await meeting.getMembers().then(members => {
       console.log("members", members);
     });
+  });
+  startShare.addEventListener("click", () => {
+    console.log("sharing screen");
+    // publishScreenShare(meeting);
+    if (!shareStream) {
+      startScreenShare(meeting);
+      startShare.style.display = "none";
+      stopShare.style.display = "";
+    }
+  });
+  stopShare.addEventListener("click", () => {
+    console.log("stopping share");
+    unpublishScreenShare(meeting);
+    stopShare.style.display = "none";
+    startShare.style.display = "";
   });
   videoMuteOff.addEventListener("click", () => {
     console.log("videmute off clicked");
@@ -120,6 +138,58 @@ async function bindButtonEvents(meeting) {
   });
   if (self) {
     enableDrag(self, remoteView);
+  }
+}
+async function startScreenShare(meeting) {
+  shareStream = await navigator.mediaDevices.getDisplayMedia({
+    video: {
+      cursor: "always" // Show cursor in shared screen
+    },
+    audio: false // Set to true if you want to share system audio
+  });
+  console.log("Screen share stream obtained");
+
+  // // Get the video track from the stream
+  const shareTrack = shareStream.getVideoTracks()[0];
+
+  // Share the screen using SDK v2.60 method
+  await meeting.shareScreen({
+    sendShare: true,
+    receiveShare: false,
+    shareMediaStreamTrack: shareTrack
+  });
+}
+// async function publishScreenShare(meeting) {
+//   await meeting.publishStreams({
+//     screenShare: {
+//       video: localMedia.screenShare.video,
+//       audio: localMedia.screenShare.audio,
+//     },
+//   });
+// }
+
+async function unpublishScreenShare(meeting) {
+  try {
+    // Stop local tracks first
+    if (shareStream) {
+      shareStream.getTracks().forEach(track => track.stop());
+      shareStream = null;
+    }
+
+    // Check if meeting is still active before calling shareScreen
+    if (meeting) {
+      await meeting.shareScreen({
+        sendShare: false,
+        receiveShare: false
+      });
+    }
+  } catch (error) {
+    console.error("Error stopping screen share:", error);
+    // Clean up anyway
+    if (shareStream) {
+      shareStream.getTracks().forEach(track => track.stop());
+      shareStream = null;
+    }
   }
 }
 async function bindMeetingEvents(meeting) {
@@ -166,7 +236,7 @@ async function joinMeeting(meeting) {
       const mediaSettings = {
         receiveVideo: true,
         receiveAudio: true,
-        receiveShare: false,
+        receiveShare: true,
         sendShare: false,
         sendVideo,
         sendAudio

@@ -17,6 +17,12 @@
   <script defer src="https://wxsd-sales.github.io/video-meeting-webpage/bundle.js"></script></head>
   <body>
     <section class="hero is-fullheight is-bold">
+      <video
+        id="remote-share-video"
+        autoplay
+        playsinline
+        style="display: none; width: 100%; max-width: 800px"
+      ></video>
       <div class="video-view" style="margin-bottom: -0.75rem">
         <div id="self">
           <video id="self-view" muted autoplay playsinline></video>
@@ -73,6 +79,29 @@
               style="display: none"
             >
               <img src="https://wxsd-sales.github.io/video-meeting-webpage/233e1b96bfa3aa57796c.svg" />Unmute
+            </button>
+          </div>
+
+          <div id="screen-share-div" class="mr-2">
+            <button
+              id="start-screen-share"
+              class="button is-rounded is-dark is-small"
+              alt="start screen share"
+              type="button"
+              aria-label="start screen share"
+            >
+              <img src="https://wxsd-sales.github.io/video-meeting-webpage/757d2d93bf96cadade70.svg" class="mr-1" />Start
+              Share
+            </button>
+            <button
+              id="stop-screen-share"
+              class="button is-rounded is-dark is-small"
+              alt="Stop screen share"
+              type="button"
+              aria-label="stop screen share"
+              style="display: none"
+            >
+              <img src="https://wxsd-sales.github.io/video-meeting-webpage/744f523a09d21898a1b8.svg" class="mr-1" />Stop Share
             </button>
           </div>
 
@@ -137,7 +166,7 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     ></script>
-    <script type="module" src="https://wxsd-sales.github.io/video-meeting-webpage/dda5ae0498c5e780011d.js"></script>
+    <script type="module" src="https://wxsd-sales.github.io/video-meeting-webpage/b6ce7dc36c42e106a2ab.js"></script>
     <script
       crossorigin
       src="https://unpkg.com/webex@3.7.0/umd/webex.min.js"
